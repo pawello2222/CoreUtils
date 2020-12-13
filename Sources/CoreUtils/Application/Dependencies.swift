@@ -12,20 +12,20 @@ import Foundation
 public enum Dependencies {
     public struct Name: Equatable {
         let rawValue: String
-        static let `default` = Name(rawValue: "__default__")
-        static func == (lhs: Name, rhs: Name) -> Bool { lhs.rawValue == rhs.rawValue }
+        public static let `default` = Name(rawValue: "__default__")
+        public static func == (lhs: Name, rhs: Name) -> Bool { lhs.rawValue == rhs.rawValue }
     }
 
     public final class Container {
         private var dependencies: [(key: Dependencies.Name, value: Any)] = []
 
-        static let `default` = Container()
+        public static let `default` = Container()
 
-        func register(_ dependency: Any, for key: Dependencies.Name = .default) {
+        public func register(_ dependency: Any, for key: Dependencies.Name = .default) {
             dependencies.append((key: key, value: dependency))
         }
 
-        func resolve<T>(_ key: Dependencies.Name = .default) -> T {
+        public func resolve<T>(_ key: Dependencies.Name = .default) -> T {
             return (dependencies
                 .filter { (dependencyTuple) -> Bool in
                     dependencyTuple.key == key
@@ -39,9 +39,9 @@ public enum Dependencies {
     public struct Inject<T> {
         private let dependencyName: Name
         private let container: Container
-        var wrappedValue: T { container.resolve(dependencyName) }
+        public var wrappedValue: T { container.resolve(dependencyName) }
 
-        init(_ dependencyName: Name = .default, on container: Container = .default) {
+        public init(_ dependencyName: Name = .default, on container: Container = .default) {
             self.dependencyName = dependencyName
             self.container = container
         }
