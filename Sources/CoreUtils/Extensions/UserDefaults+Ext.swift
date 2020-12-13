@@ -8,19 +8,27 @@
 
 import Foundation
 
-@propertyWrapper
-public struct UserDefaultsBacked<Value> {
-    let key: String
-    let defaultValue: Value
-    var storage: UserDefaults = .standard
+public extension UserDefaults {
+    @propertyWrapper
+    struct Wrap<Value> {
+        private let key: String
+        private let defaultValue: Value
+        private let storage: UserDefaults
 
-    public var wrappedValue: Value {
-        get {
-            let value = storage.value(forKey: key) as? Value
-            return value ?? defaultValue
+        public init(key: String, defaultValue: Value, storage: UserDefaults = .standard) {
+            self.key = key
+            self.defaultValue = defaultValue
+            self.storage = storage
         }
-        set {
-            storage.setValue(newValue, forKey: key)
+
+        public var wrappedValue: Value {
+            get {
+                let value = storage.value(forKey: key) as? Value
+                return value ?? defaultValue
+            }
+            set {
+                storage.setValue(newValue, forKey: key)
+            }
         }
     }
 }
