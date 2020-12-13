@@ -10,13 +10,13 @@ import Foundation
 
 /// Taken from: https://fmo91.github.io/0002-dependency-injection-using-property-wrappers/
 public enum Dependencies {
-    struct Name: Equatable {
+    public struct Name: Equatable {
         let rawValue: String
         static let `default` = Name(rawValue: "__default__")
         static func == (lhs: Name, rhs: Name) -> Bool { lhs.rawValue == rhs.rawValue }
     }
 
-    final class Container {
+    public final class Container {
         private var dependencies: [(key: Dependencies.Name, value: Any)] = []
 
         static let `default` = Container()
@@ -36,7 +36,7 @@ public enum Dependencies {
     }
 
     @propertyWrapper
-    struct Inject<T> {
+    public struct Inject<T> {
         private let dependencyName: Name
         private let container: Container
         var wrappedValue: T { container.resolve(dependencyName) }

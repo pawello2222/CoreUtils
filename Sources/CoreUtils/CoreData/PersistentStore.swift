@@ -8,8 +8,8 @@
 
 import CoreData
 
-protocol PersistentStore {
-    typealias DBOperation<Result> = (NSManagedObjectContext) throws -> Result
+public protocol PersistentStore {
+    public typealias DBOperation<Result> = (NSManagedObjectContext) throws -> Result
 
     func fetch<T, V>(_ request: NSFetchRequest<T>, map: @escaping (T) -> V?) -> [V] where T: ManagedEntity
     func delete(_ request: NSBatchDeleteRequest)

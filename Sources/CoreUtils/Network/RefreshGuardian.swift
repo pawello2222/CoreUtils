@@ -8,8 +8,6 @@
 
 import Foundation
 
-// MARK: - Refresh Guardian Protocol
-
 public protocol RefreshGuardian {
     var refreshGranularity: Calendar.Component { get }
     var refreshInterval: TimeInterval { get }
