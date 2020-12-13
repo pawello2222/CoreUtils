@@ -8,27 +8,14 @@
 
 import Foundation
 
-public enum APIError {
+public enum APIError: Error {
     case offline
     case network(code: Int, description: String)
-    case invalidRequest(description: String)
+    case badRequest(description: String)
+    case unauthorized
+    case forbidden
+    case tooManyRequests
     case recentlyUpdated
+    case parsing(description: String)
     case unknown(description: String? = nil)
-}
-
-extension APIError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .offline:
-            return "No Internet connection."
-        case .network(let code, let description):
-            return "Network error: (\(code)) \(description)"
-        case .invalidRequest(let description):
-            return "Invalid request: \(description)"
-        case .recentlyUpdated:
-            return "Recently updated"
-        case .unknown(let description):
-            return "Unknown error" + (description != nil ? ": \(description!)" : "")
-        }
-    }
 }
