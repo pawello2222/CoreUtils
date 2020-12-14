@@ -10,6 +10,7 @@ import Foundation
 
 public protocol APIResource {
     associatedtype Response: Decodable
+    var httpMethod: String { get }
     var serverPath: String { get }
     var methodPath: String { get }
     var queryItems: [URLQueryItem]? { get }
